@@ -5,5 +5,5 @@ let quiz = [
   { q:"5 x 3 = ?", options:["15","10","8","20"], answer:0 }
 ];
 
-// Store scores temporarily (offline)
+// Store participant scores temporarily
 let scores = [];
