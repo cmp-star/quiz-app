@@ -22,7 +22,7 @@ let qno = 0;
 function nextQ() {
   if(qno >= questions.length) return;
   document.getElementById("qno").innerText = qno;
-  // Open quiz page in new tab with question number in URL
+  // Open quiz page in new tab with question number
   window.open("quiz.html?q=" + qno, "_blank");
   qno++;
 }
