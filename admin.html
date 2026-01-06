@@ -3,28 +3,27 @@
 <head>
   <title>Admin Panel</title>
   <style>
-    body { font-family: Arial; text-align: center; background: #fff3e0; }
-    .panel { background:white; width:50%; margin:auto; padding:20px; border-radius:10px; box-shadow:0 0 10px gray; }
+    body { font-family: Arial; text-align:center; background:#fff3e0; }
     button { padding:10px 20px; font-size:16px; background:#ff9800; color:white; border:none; border-radius:5px; cursor:pointer; }
   </style>
 </head>
 <body>
 
-<div class="panel">
-  <h2>Admin Control Board</h2>
-  <button onclick="nextQ()">Next Question</button>
-  <p>Current Question Number: <span id="qno">0</span></p>
-</div>
+<h2>Admin Control Board</h2>
+
+<button onclick="nextQ()">Next Question</button>
+
+<p>Current Question Number: <span id="qno">0</span></p>
 
 <script src="data.js"></script>
 <script>
 let qno = 0;
 
-// Fix: store the current question BEFORE increment
 function nextQ() {
-  if (qno >= questions.length) return;
-  localStorage.setItem("currentQuestion", qno);  // send to quiz page
+  if(qno >= questions.length) return;
   document.getElementById("qno").innerText = qno;
+  // Open quiz page in new tab with question number in URL
+  window.open("quiz.html?q=" + qno, "_blank");
   qno++;
 }
 </script>
