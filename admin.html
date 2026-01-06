@@ -1,54 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Panel</title>
-
-  <style>
-    body {
-      font-family: Arial;
-      background-color: #fff3e0;
-      text-align: center;
-    }
-    .panel {
-      background: white;
-      width: 50%;
-      margin: auto;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px gray;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #ff9800;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-  </style>
+  <title>Admin</title>
 </head>
 
-<body>
+<body style="font-family:Arial; text-align:center;">
 
-<div class="panel">
-  <h2>Admin Control Board</h2>
-  <button onclick="nextQ()">Next Question</button>
-  <p>Current Question: <span id="qno">0</span></p>
-</div>
+  <h1>ADMIN CONTROL BOARD</h1>
 
-<script src="data.js"></script>
-<script>
-let qno = 0;
+  <button onclick="nextQ()" style="font-size:20px;">
+    NEXT QUESTION
+  </button>
 
-function nextQ() {
-  if (qno < questions.length - 1) {
-    qno++;
-    localStorage.setItem("currentQuestion", qno);
-    document.getElementById("qno").innerText = qno;
-  }
-}
-</script>
+  <p>Current Question Number:
+    <span id="qno">0</span>
+  </p>
+
+  <script src="data.js"></script>
+  <script>
+    let qno = 0;
+
+    function nextQ() {
+      localStorage.setItem("currentQuestion", qno);
+      document.getElementById("qno").innerText = qno;
+      qno++;
+    }
+  </script>
 
 </body>
 </html>
