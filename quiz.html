@@ -14,6 +14,7 @@
 <div class="box">
   <h2 id="question">Loading...</h2>
   <div id="options"></div>
+  <p>Score: <span id="score">0</span></p>
 </div>
 
 <script src="data.js"></script>
@@ -26,14 +27,28 @@ function getQueryParam(name) {
 let qno = parseInt(getQueryParam("q"));
 if(isNaN(qno)) qno = 0;
 
-let q = questions[qno];
-document.getElementById("question").innerText = q.q;
+let score = 0;
 
-let html = "";
-q.options.forEach(o=>{
-  html += `<button>${o}</button><br>`;
-});
-document.getElementById("options").innerHTML = html;
+function loadQuestion() {
+  let q = questions[qno];
+  document.getElementById("question").innerText = q.q;
+
+  let html = "";
+  q.options.forEach((o,i)=>{
+    html += `<button onclick="checkAnswer(${i})">${o}</button><br>`;
+  });
+  document.getElementById("options").innerHTML = html;
+}
+
+function checkAnswer(selected){
+  if(selected === questions[qno].answer){
+    score++;
+    document.getElementById("score").innerText = score;
+  }
+  alert("Your current score: " + score);
+}
+
+loadQuestion();
 </script>
 
 </body>
