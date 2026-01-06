@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel</title>
+<style>
+body { font-family: Arial; padding:20px; background:#f2f2f2; }
+.box { background:#fff; padding:20px; border-radius:10px; margin-bottom:20px; }
+</style>
+<script src="data.js"></script>
+</head>
+<body>
+
+<div class="box" id="adminBox">
+  <h2>Admin Panel</h2>
+  <h3>All Scores</h3>
+  <div id="scoreList"></div>
+  <button onclick="refreshScores()">Refresh</button>
+</div>
+
+<script>
+function refreshScores(){
+  let list = document.getElementById("scoreList");
+  list.innerHTML = "";
+  if(scores.length === 0){
+    list.innerHTML = "<p>No participants yet.</p>";
+    return;
+  }
+  scores.forEach(s=>{
+    list.innerHTML += `<p>${s.name} (ID: ${s.id}) → Score: ${s.score}</p>`;
+  });
+}
+refreshScores();
+</script>
+
+</body>
+</html>

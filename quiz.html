@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz</title>
+<style>
+body { font-family: Arial; padding:20px; background:#f2f2f2; }
+.box { background:#fff; padding:20px; border-radius:10px; margin-bottom:20px; }
+button { padding:10px; margin:5px 0; width:100%; font-size:16px; }
+.correct { background-color: green; color: white; }
+.wrong { background-color: red; color: white; }
+#timer { font-weight: bold; color: red; }
+</style>
+<script src="data.js"></script>
+</head>
+<body>
+
+<!-- Start Box -->
+<div class="box" id="startBox">
+  <h2>Start Quiz</h2>
+  <input id="nameInput" placeholder="Your Name"><br><br>
+  <input id="idInput" placeholder="Your ID"><br><br>
+  <button onclick="startQuiz()">Start</button>
+</div>
+
+<!-- Quiz Box -->
+<div class="box" id="quizBox" style="display:none">
+  <p>Time Left: <span id="timer">60</span>s</p>
+  <h3 id="question"></h3>
+  <div id="options"></div>
+  <button onclick="nextQuestion()">Next</button>
+</div>
+
+<!-- Score Box -->
+<div class="box" id="scoreBox" style="display:none">
+  <h2>Quiz Finished!</h2>
+  <p id="scoreText"></p>
+</div>
+
+<script>
+let i = 0;
+let score = 0;
+let locked = false;
+let timer = 60;
+let timerInterval;
+
+function startQuiz(){
+  let name = document.getElementById("nameInput").value.trim();
+  let id = document.getElementById("idInput").value.trim();
+  if(!name || !id){ alert("Please enter Name and ID"); return; }
+
+  document.getElementById("startBox").style.display="none";
+  document.getElementById("quizBox").style.display="block";
+
+  startTimer();
+  loadQuestion();
+}
+
+function startTimer(){
+  timerInterval = setInterval(()=>{
+    timer--;
+    document.getElementById("timer").innerText = timer;
+    if(timer <= 0) endQuiz();
+  },1000);
+}
+
+function loadQuestion(){
+  locked = false;
+  let q = quiz[i];
+  document.getElementById("question").innerText = q.q;
+  let html = "";
+  q.options.forEach((opt, idx)=>{
+    html += `<button onclick="checkAnswer(${idx}, this)">${opt}</button>`;
+  });
+  document.getElementById("options").innerHTML = html;
+}
+
+function checkAnswer(index, btn){
+  if(locked) return;
+  locked = true;
+  if(index === quiz[i].answer){
+    btn.classList.add("correct");
+    score++;
+  } else {
+    btn.classList.add("wrong");
+    let buttons = document.querySelectorAll("#options button");
+    buttons[quiz[i].answer].classList.add("correct");
+  }
+}
+
+function nextQuestion(){
+  i++;
+  if(i < quiz.length) loadQuestion();
+  else endQuiz();
+}
+
+function endQuiz(){
+  clearInterval(timerInterval);
+  document.getElementById("quizBox").style.display="none";
+  document.getElementById("scoreBox").style.display="block";
+  document.getElementById("scoreText").innerText = `Your Score: ${score}/${quiz.length}`;
+  scores.push({name: document.getElementById("nameInput").value, id: document.getElementById("idInput").value, score: score});
+}
+</script>
+
+</body>
+</html>
