@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin</title>
+</head>
+<body>
+
+<h2>Admin Control Board</h2>
+<button onclick="nextQ()">Next Question</button>
+
+<p>Current Question: <span id="qno">0</span></p>
+
+<script src="data.js"></script>
+<script>
+let qno = 0;
+
+function nextQ() {
+  if (qno < questions.length - 1) {
+    qno++;
+    localStorage.setItem("currentQuestion", qno);
+    document.getElementById("qno").innerText = qno;
+  }
+}
+</script>
+
+</body>
+</html>
