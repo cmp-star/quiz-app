@@ -1,36 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel</title>
-<style>
-body { font-family: Arial; padding:20px; background:#f2f2f2; }
-.box { background:#fff; padding:20px; border-radius:10px; margin-bottom:20px; }
-</style>
-<script src="data.js"></script>
+  <title>Admin Control Board</title>
 </head>
 <body>
 
-<div class="box" id="adminBox">
-  <h2>Admin Panel</h2>
-  <h3>All Scores</h3>
-  <div id="scoreList"></div>
-  <button onclick="refreshScores()">Refresh</button>
-</div>
+<h2>Control Board</h2>
 
+<button onclick="prevQ()">Previous</button>
+<button onclick="nextQ()">Next</button>
+
+<p>Current Question No: <span id="qno">0</span></p>
+<p>Player Score: <span id="pscore">0</span></p>
+
+<script src="data.js"></script>
 <script>
-function refreshScores(){
-  let list = document.getElementById("scoreList");
-  list.innerHTML = "";
-  if(scores.length === 0){
-    list.innerHTML = "<p>No participants yet.</p>";
-    return;
-  }
-  scores.forEach(s=>{
-    list.innerHTML += `<p>${s.name} (ID: ${s.id}) → Score: ${s.score}</p>`;
-  });
+let currentQuestion = 0;
+
+function updateBoard() {
+  document.getElementById("qno").innerText = currentQuestion;
+  localStorage.setItem("currentQuestion", currentQuestion);
 }
-refreshScores();
+
+function nextQ() {
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    updateBoard();
+  }
+}
+
+function prevQ() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    updateBoard();
+  }
+}
+
+/* Live score view */
+setInterval(() => {
+  document.getElementById("pscore").innerText =
+    localStorage.getItem("playerScore") || 0;
+}, 500);
+
+updateBoard();
 </script>
 
 </body>
